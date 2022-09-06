@@ -1,70 +1,147 @@
-# Getting Started with Create React App
+# mojob-job-feed
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## The task
 
-## Available Scripts
+We would like you to:
+* fetch job listings and display them in a job feed
+* create a job position function filter.
 
-In the project directory, you can run:
+All job listings and all job locations can be fetched from our public API.
 
-### `npm start`
+## The API documentation
+https://test-api.mojob.io/public/docs/
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+You do not need to authorize to use those endpoints.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+To test an endpoint you can click on the endpoint, then click "Try it out", then scroll a bit down and click the blue "Execute" button.
 
-### `npm test`
+We would like you to try to make it look like the given design.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+There are hints on how to solve the task in the files inside the src directory.
 
-### `npm run build`
+## Design
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+[See the full design in Figma](https://www.figma.com/file/kGJR8Mrvsh8uHnniHr22bs/Mojob-s-tree-structure-testing?node-id=0%3A1)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Design 1
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+In the design below you can see a list of job listings, position function filtering 
+selector and pagination page size selector. 
 
-### `npm run eject`
+The data to display in the list of job listings needs to be fetched from our public API.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Notice how that there are no default position function filters set, and that the page size
+is set to 5 items per page.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![Mojob job feed - Design 1](documentation/1.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Design 2
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+In the design below you can see the position function filtering selector.
+We use Position functions to categorize and organize jobs posted on Mojob.
+We use the [International Standard Classification of Occupations (ISCO)](https://en.wikipedia.org/wiki/International_Standard_Classification_of_Occupations)
 
-## Learn More
+To get you started we have already fetched all position functions from the public API
+in `src/Home.vue`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![Mojob job feed - Design 2](documentation/2.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Design 3
 
-### Code Splitting
+In the design below you can see the tree structure of the position functions and it
+being displayed in the position function filtering selector.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The ISCO standard divides jobs into major groups and sub-major groups.
 
-### Analyzing the Bundle Size
+The jobs can only be connected to sub-major groups, but in the public endpoint to
+fetch job listings you can filter on both major groups and sub-major groups.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+When fetched from the public API all major position functions will 
+contain a `children` field that contains a list  of all sub-major position functions.
 
-### Making a Progressive Web App
+![Mojob job feed - Design 3](documentation/3.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Design 4
 
-### Advanced Configuration
+Below you can see the pagination page size selector.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+In order to decide the number of objects in each page we can use the query parameter
+`?page_size=5`
 
-### Deployment
+The "Display all" option can be solved in several ways:
+* Browse the public API docs and see if you can find `use_pagination` option
+* Use the `count` from `IPage` response from the public API
+* Use a big `page_size` query parameter number
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+![Mojob job feed - Design 4](documentation/4.png)
 
-### `npm run build` fails to minify
+### Design 5
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Below you can see how the text of the "<page_size> PER PAGE" changes when you select a 
+new page size option.
+
+![Mojob job feed - Design 5](documentation/5.png)
+
+
+
+## What we expect
+
+* Read through entire README.md before delivering
+* Code that works
+  - After you have delivered your finished project we are able to run your code.
+  - We prioritize functionality and readable code before looks, but our UI/UX designer will be very pleased if the outcome looks similar to the given design.
+* Framework
+  - We encourage you to use the given Vue project template, but we will rate all submissions equally. The most important thing is that we can run your code easily.
+  - You are allowed to use different technologies like Angular or React.
+* Language
+  - We encourage you to use TypeScript, but JavaScript is also allowed.
+
+## Node + NPM versions
+```
+Node v12.19.0 (npm v6.14.8)
+```
+
+It might be necessary for you to use this version in order to get
+this project to install and run properly.
+
+We use [node version manager (nvm)](https://github.com/nvm-sh/nvm) to quickly change node versions. If you are not able to use `nvm` you can either install this specific Node version or you can create a new project with [vue/cli](https://cli.vuejs.org/guide/creating-a-project.html#vue-create) with the Node+NPM-version of your choice.
+
+Remember to let us know at the bottom of this README.md before delivering your project what you chose.
+
+## Project setup
+
+### Command to install dependencies
+```
+npm install
+```
+### Command to run the development server
+```
+npm run serve
+```
+
+## Comments
+
+* Use the tools and framework you are comfortable with. 
+* After you have delivered your project we will read the code and run the project. 
+* We have estimated this task to take 1-2 hours, but you can spend as much time as you like.
+
+## ⚠️ LOOK HERE BEFORE DELIVERING!
+1. Please fill in this section before delivering your project
+
+```
+I have used node version:
+v16.14.0
+I have used npm version:
+v8.3.1
+Javascript framework used:
+React
+If you did not use the given Vue project template, describe how can we run your code:
+npm install
+npm start
+Do you have any other comments regarding your deliverable?
+No comments
+Do you have any comments/feedback about the task we gave you?
+No comments
+```
+
+2. To deliver your project you can either send us the link to the git project in the Mojob chat or you can send the archived project by email to `bs@mojob.io`.

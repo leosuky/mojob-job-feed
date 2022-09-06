@@ -1,0 +1,7 @@
+.select-position {
+    width: 250px;
+    border: unset;
+    outline: none;
+    font-weight: bold;
+    height: 20px;
+}
